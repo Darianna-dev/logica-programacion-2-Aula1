@@ -69,6 +69,9 @@ body::before {
 
 .container__boton:hover {
     cursor: pointer;
+    background: #09f;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
 }
 
 .container__boton:disabled {

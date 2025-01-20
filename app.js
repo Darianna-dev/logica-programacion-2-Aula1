@@ -4,51 +4,10 @@ let intento = 1;
 const btnIntentar = document.querySelector(".intentar");
 const btnNuevoJuego = document.querySelector("#reiniciar");
 const body = document.querySelector("body");
+const textInput = document.querySelector(".container__input");
 
-/* **************************************************************************************** */
-
-//*************************** ventana Modal***************************************
-
-// const modal = document.createElement("dialog");
-// const textoModal = document.createElement("p");
-// const closeModal = document.createElement("button");
-
-// body.appendChild(modal);
-// modal.appendChild(textoModal);
-// modal.appendChild(closeModal);
-// closeModal.textContent = "Cerrar";
-// closeModal.onclick = () => modal.close();
-// modal.style.width = "300px";
-// modal.style.height = "150px";
-// modal.style.position = "fixed";
-// modal.style.top = "50%";
-// modal.style.left = "50%";
-// modal.style.transform = "translate(-50%, -50%)";
-// modal.style.background = "white";
-// modal.style.border = "1px solid black";
-// modal.style.padding = "20px";
-// modal.style.borderRadius = "10px";
-// modal.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-// modal.style.zIndex = "1000";
-// modal.style.display = "none";
-// modal.style.textAlign = "center";
-// modal.style.fontFamily = "Arial, sans-serif";
-// modal.style.fontSize = "16px";
-// modal.style.color = "black";
-// modal.style.fontWeight = "bold";
-// modal.style.textDecoration = "none";
-// modal.style.cursor = "pointer";
-// modal.style.userSelect = "none";
-// modal.style.msUserSelect = "none";
-// modal.style.mozUserSelect = "none";
-// modal.style.webkitUserSelect = "none";
-// modal.style.oUserSelect = "none";
-// modal.style.borderSpacing = "0px";
-// modal.style.borderCollapse = "separate";
-// modal.style.outline = "none";
-// modal.style.boxSizing = "border-box";
-
-/* **************************************************************************************** */
+let numSecreto = generarNumeroSecreto(10);
+console.log(numSecreto);
 
 const reiniciarJuego = () => {
     window.location.href = window.location.href; /* Recarga la página */
@@ -63,34 +22,42 @@ function asignarTextoElemento(elemento, texto) {
 }
 
 function verificarIntento() {
-    const textInput = document.querySelector(".container__input");
+    if (textInput.value === "") {
+        asignarTextoElemento("P", `Debe ingresar un número entre 1 y 10`);
+        textInput.focus();
+        return false;
+    }
     let numeroDeUsuario = parseInt(textInput.value);
     console.log(numeroDeUsuario);
 
     if (numeroDeUsuario === numSecreto) {
         // modal.showModal();
-        alert("¡Has acertado!");
+        asignarTextoElemento(
+            "P",
+            `Acertaste el número en ${intento} ${
+                intento === 1 ? "intento" : "intentos"
+            }`
+        );
         // textInput.setAttribute("disabled", true);        /* desactiva el textInput*/
-        textInput.disabled = true;
-        /* desactiva el textInput*/
+        textInput.disabled = true; /* desactiva el textInput*/
         btnIntentar.disabled = true;
         btnNuevoJuego.disabled = false;
-        // window.location.href = window.location.href;     /* Recarga la página */
+        // btnNuevoJuego.removeAttribute("disabled");           /* Elimina el Atributo disabled */
+        // window.location.href = window.location.href;         /* Recarga la página */
     } else {
         if (intento !== cantidadDeIntentos) {
             console.log("Intento: " + intento);
             if (numeroDeUsuario < numSecreto) {
-                alert("El número es mayor");
-                textInput.value = "";
-                textInput.focus();
+                asignarTextoElemento("P", "El número es mayor");
+                limpiarInput();
             } else {
-                alert("El número es menor");
-                textInput.value = "";
-                textInput.focus();
+                asignarTextoElemento("P", "El número es menor");
+                limpiarInput();
             }
         } else {
-            alert("Has agotado los intentos");
+            asignarTextoElemento("P", "Se agotaron los intentos");
             textInput.setAttribute("disabled", true);
+            limpiarInput();
             btnIntentar.disabled = true;
             btnNuevoJuego.disabled = false;
         }
@@ -100,53 +67,14 @@ function verificarIntento() {
     return;
 }
 
+function limpiarInput() {
+    textInput.value = "";
+    textInput.focus();
+}
+
 function generarNumeroSecreto(numero) {
     return Math.ceil(Math.random() * numero);
 }
 
 asignarTextoElemento("h1", "Juego del Número Secreto");
 asignarTextoElemento("p", "Escoge un número del 1 al 10");
-
-let numSecreto = generarNumeroSecreto(10);
-console.log(numSecreto);
-
-//*************************** ventana Modal***************************************
-
-// const modal = document.createElement("dialog");
-// const textoModal = document.createElement("p");
-// const closeModal = document.createElement("button");
-
-// body.appendChild(modal);
-// modal.appendChild(textoModal);
-// modal.appendChild(closeModal);
-// closeModal.textContent = "Cerrar";
-// closeModal.onclick = () => modal.close();
-// modal.style.width = "300px";
-// modal.style.height = "150px";
-// modal.style.position = "fixed";
-// modal.style.top = "50%";
-// modal.style.left = "50%";
-// modal.style.transform = "translate(-50%, -50%)";
-// modal.style.background = "white";
-// modal.style.border = "1px solid black";
-// modal.style.padding = "20px";
-// modal.style.borderRadius = "10px";
-// modal.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-// modal.style.zIndex = "1000";
-// modal.style.display = "none";
-// modal.style.textAlign = "center";
-// modal.style.fontFamily = "Arial, sans-serif";
-// modal.style.fontSize = "16px";
-// modal.style.color = "black";
-// modal.style.fontWeight = "bold";
-// modal.style.textDecoration = "none";
-// modal.style.cursor = "pointer";
-// modal.style.userSelect = "none";
-// modal.style.msUserSelect = "none";
-// modal.style.mozUserSelect = "none";
-// modal.style.webkitUserSelect = "none";
-// modal.style.oUserSelect = "none";
-// modal.style.borderSpacing = "0px";
-// modal.style.borderCollapse = "separate";
-// modal.style.outline = "none";
-// modal.style.boxSizing = "border-box";
